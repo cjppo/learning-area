@@ -4,7 +4,7 @@
 
 <font size=1>*&ensp;本文翻译自：
 [3 Ways to Fix the CORS Error — and How the Access-Control-Allow-Origin Header Works](https://medium.com/@dtkatz/3-ways-to-fix-the-cors-error-and-how-access-control-allow-origin-works-d97d55946d9)
-<font size=1>
+</font>
 
 
 ## **CORS错误是什么**
@@ -54,14 +54,21 @@
 但这个机制有个麻烦，每当访问某个域的时候，浏览器都会自动地带上域相关的cookie。因此，假设这样一个场景，你点开了一个恶意弹出的页面：evil-site.com，
 </br>
 ![img](https://miro.medium.com/max/1400/0*Buuk1Xt78FVpnf3W)
-evil-site中有访问facebook-clone.com/api的代码。由于你曾经访问过facebook-clone.com，本地保存了cookie。所以在evil-site访问相同域的资源时，浏览器会带着cookie，因此获得facebook-clone.com的认证，至此你的账户成功地被evil-site用伪造的跨站请求黑了。
+evil-site中有访问
+facebook-clone.com/api
+的代码。由于你曾经访问过
+facebook-clone.com
+，本地保存了cookie。所以在evil-site访问相同域的资源时，浏览器会带着cookie，因此获得facebook-clone.com的认证，至此你的账户成功地被evil-site用伪造的跨站请求黑了。
 </br>
 </br>
 不过，现在的浏览器都会介入这个访问的过程，防止这些恶意代码对API的伪造请求，实际上evil-site对API的请求只能得到一个失败的结果，失败原因：*同源策略不允许这样的操作*。
 </br>
 </br>
 ### **揭开同源策略背后的原理**
-每当发起访问时，浏览器在背后都会校验web app和服务端的***源***是否匹配，上面的例子中，***源***被简化为了前端页面程序和后端服务程序，实际上，***源***是由一系列属性构成的，包括网络传输协议，主机名称，端口等等。比如，https://www,facebook-clone.com的传输协议是https，主机名称是www.facebook-clone.com，端口是443（这里被隐藏了，https协议的默认访问端口是443）。
+每当发起访问时，浏览器在背后都会校验web app和服务端的***源***是否匹配，上面的例子中，***源***被简化为了前端页面程序和后端服务程序，实际上，***源***是由一系列属性构成的，包括网络传输协议，主机名称，端口等等。比如，
+https://www.facebook-clone.com
+的传输协议是https，主机名称是
+www.facebook-clone.com，端口是443（这里被隐藏了，https协议的默认访问端口是443）。
 为了验证同源，浏览器会在所有请求中附带一个特殊的请求一起发送给域信息接收服务器。比如有个应用运行在域localhost:3000上，这个特殊请求的格式将像下面这样：
 </br>
 ```js
@@ -114,7 +121,8 @@ https://joke-api-strict-cors.appspot.com/jokes/random
 https://cors-anywhere.herokuapp.com/https://joke-api-strict-cors.appspot.com/jokes/random
 ```
 
-代理服务获取到了你想要访问的真正地址：https://joke-api-strict-cors.appspot.com/jokes/random，然后帮你把请求发给它，并收到api的返回。最后代理服务在原始的返回中，附加上一个
+代理服务获取到了你想要访问的真正地址：https://joke-api-strict-cors.appspot.com/jokes/random
+，然后帮你把请求发给它，并收到api的返回。最后代理服务在原始的返回中，附加上一个
 *Access-Control-Allow-Origin:&ensp;**
 header。
 </br>
